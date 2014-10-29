@@ -1,0 +1,30 @@
+{
+    "name": "yii-dream-team/yii2-wizard-behavior",
+    "description": "Yii2 Wizard Behavior",
+    "license": "MIT",
+	"type": "yii2-extension",
+	"keywords": ["yii2", "wizard", "behavior"],
+    "authors": [
+        {
+            "name": "Alexey Samoylov",
+            "email": "alexey.samoylov@gmail.com",
+            "homepage": "http://yiiblog.ru",
+            "role": "Developer"
+        },
+        {
+            "name": "Valentin Konusov",
+            "email": "rlng-krsk@yandex.ru",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php":">=5.4.0",
+		"yiisoft/yii2": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "yiidreamteam\\wizard\\": "./src"
+        }
+    }
+}
