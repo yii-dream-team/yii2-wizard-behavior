@@ -6,7 +6,29 @@
 
 namespace yiidreamteam\wizard;
 
+/**
+ * Wizard event class.
+ * This is the event raised by the wizard.
+ */
 class Event extends \yii\base\Event
 {
+    public $data = [];
+    public $step;
 
+    /**
+     * Event factory
+     *
+     * @param Object $sender
+     * @param string|null $step
+     * @param array $data
+     * @return Event
+     */
+    public static function create($sender, $step = null, $data = null)
+    {
+        return new static([
+            'sender' => $sender,
+            'step' => $step,
+            'data' => $data
+        ]);
+    }
 }
