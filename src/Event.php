@@ -12,8 +12,8 @@ namespace yiidreamteam\wizard;
  */
 class Event extends \yii\base\Event
 {
-    const START = 'wizardStart';
-    const FINISHED = 'wizardFinished';
+    const WIZARD_START = 'wizardStart';
+    const WIZARD_FINISHED = 'wizardFinished';
     const PROCESS_STEP = 'wizardProcessStep';
     const INVALID_STEP = 'wizardInvalidStep';
 
