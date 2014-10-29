@@ -14,8 +14,13 @@ class Event extends \yii\base\Event
 {
     const WIZARD_START = 'wizardStart';
     const WIZARD_FINISHED = 'wizardFinished';
-    const PROCESS_STEP = 'wizardProcessStep';
-    const INVALID_STEP = 'wizardInvalidStep';
+    const WIZARD_PROCESS_STEP = 'wizardProcessStep';
+    const WIZARD_INVALID_STEP = 'wizardInvalidStep';
+
+    const WIZARD_RESET = 'wizardReset';
+    const WIZARD_CANCEL = 'wizardCancel';
+    const WIZARD_EXPIRED = 'wizardExpired';
+    const WIZARD_SAVE_DRAFT = 'wizardSaveDraft';
 
     public $data = [];
     public $step;
@@ -23,7 +28,7 @@ class Event extends \yii\base\Event
     /**
      * Event factory
      *
-     * @param Object $sender
+     * @param \yii\base\Object $sender
      * @param string|null $step
      * @param array $data
      * @return Event
