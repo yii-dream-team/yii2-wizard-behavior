@@ -68,9 +68,9 @@ class Behavior extends \yii\base\Behavior
 
     /** @var array Owner event handlers */
     public $events = [
-        Event::WIZARD_FINISHED => 'wizardFinished',
-        Event::WIZARD_PROCESS_STEP => 'wizardProcessStep',
         Event::WIZARD_START => 'wizardStart',
+        Event::WIZARD_PROCESS_STEP => 'wizardProcessStep',
+        Event::WIZARD_FINISHED => 'wizardFinished',
         Event::WIZARD_INVALID_STEP => 'wizardInvalidStep'
     ];
 
