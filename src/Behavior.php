@@ -136,8 +136,6 @@ class Behavior extends \yii\base\Behavior
     private $_currentStep;
     /** @var array The steps to be processed. */
     private $_steps;
-    /** @var array Step labels */
-    private $_stepLabels;
     /** @var string The session key that holds processed step data. */
     private $_stepsKey;
     /** @var string The session key that holds branch directives. */
@@ -174,6 +172,9 @@ class Behavior extends \yii\base\Behavior
         $this->_timeoutKey = $this->sessionKey . '.timeout';
 
         $this->parseSteps();
+
+        if (!count($this->steps))
+            throw new InvalidConfigException(\Yii::t('wizard', 'Steps are not defined'));
     }
 
     /**
@@ -259,9 +260,14 @@ class Behavior extends \yii\base\Behavior
      * Returns the one-based index of the current step.
      * Note that this is for the current steps; branching may vary the index of a given step
      */
-    public function getCurrentStep()
+    public function getCurrentStepIndex()
     {
         return $this->getStepIndex($this->_currentStep) + 1;
+    }
+
+    public function getCurrentStep()
+    {
+        return $this->_currentStep;
     }
 
     /**
@@ -273,21 +279,6 @@ class Behavior extends \yii\base\Behavior
     public function getStepCount()
     {
         return count($this->_steps);
-    }
-
-    /**
-     * @param string|null $step
-     * @return string
-     */
-    public function getStepLabel($step = null)
-    {
-        if ($step === null)
-            $step = $this->_currentStep;
-
-        if (!isset($this->_stepLabels[$step]))
-            return ucwords(trim(strtolower(str_replace(['-', '_', '.'], ' ', preg_replace('/(?<![A-Z])[A-Z]/', ' \0', $step)))));
-
-        return $this->_stepLabels[$step];
     }
 
     /**
@@ -401,12 +392,12 @@ class Behavior extends \yii\base\Behavior
         $branches = $this->branches();
 
         foreach ($branchDirectives as $name => $directive) {
-            if ($directive === self::BRANCH_DESELECT)
+            if ($directive === static::BRANCH_DESELECT)
                 unset($branches[$name]);
             else {
                 if (is_int($name)) {
                     $name = $directive;
-                    $directive = self::BRANCH_SELECT;
+                    $directive = static::BRANCH_SELECT;
                 }
                 $branches[$name] = $directive;
             }
@@ -452,7 +443,6 @@ class Behavior extends \yii\base\Behavior
 
     /**
      * Returns the first unprocessed step (i.e. step data not saved in Session).
-     *
      * @return string|null The first unprocessed step; null if all steps have been processed
      */
     protected function getExpectedStep()
@@ -472,7 +462,11 @@ class Behavior extends \yii\base\Behavior
     protected function parseSteps()
     {
         $this->_steps = $this->_parseSteps($this->steps);
-        $this->_stepLabels = array_flip($this->_steps);
+    }
+
+    public function getParsedSteps()
+    {
+        return $this->_steps;
     }
 
     /**
@@ -554,6 +548,8 @@ class Behavior extends \yii\base\Behavior
 
     /**
      * Raises the Event::WIZARD_EXPIRED event.
+     * @param $step
+     * @return bool
      */
     protected function expired($step)
     {
@@ -620,6 +616,7 @@ class Behavior extends \yii\base\Behavior
     /**
      * Raises the onSaveDraft event.
      * The event::data property contains the data to save.
+     * @param $step
      */
     protected function saveDraft($step)
     {
