@@ -9,6 +9,8 @@ namespace yiidreamteam\wizard;
 /**
  * Wizard event class.
  * This is the event raised by the wizard.
+ *
+ * @property Behavior $sender
  */
 class Event extends \yii\base\Event
 {
