@@ -240,7 +240,9 @@ class Behavior extends \yii\base\Behavior
      */
     public function save($data, $step = null)
     {
-        $this->_session[$this->_stepsKey][empty($step) ? $this->_currentStep : $step] = $data;
+        $stepsData = $this->_session->get($this->_stepsKey, []);
+        $stepsData[empty($step) ? $this->_currentStep : $step] = $data;
+        $this->_session->set($this->_stepsKey, $stepsData);
     }
 
     /**
@@ -447,13 +449,11 @@ class Behavior extends \yii\base\Behavior
      */
     protected function getExpectedStep()
     {
-        $steps = $this->_session[$this->_stepsKey];
-        if (!is_null($steps)) {
-            foreach ($this->_steps as $step) {
-                if (!isset($steps[$step]))
-                    return $step;
-            }
-        }
+        $storedSteps = array_keys($this->_session->get($this->_stepsKey, []));
+        foreach ($this->_steps as $step)
+            if (!in_array($step, $storedSteps))
+                return $step;
+        return null;
     }
 
     /**
