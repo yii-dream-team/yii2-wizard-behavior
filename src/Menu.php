@@ -56,11 +56,11 @@ class Menu extends Widget
         if (!$this->wizard instanceof Behavior)
             throw new InvalidConfigException(\Yii::t('wizard', 'Behavior '.__NAMESPACE__.'\Behavior not found at Controller'));
 
-        $config = [];
-        $config['class'] = '\yii\bootstrap\Nav';
-        $config['items'] = $this->generateMenuItems();
+        $defaultConfig = [];
+        $defaultConfig['class'] = '\yii\bootstrap\Nav';
+        $defaultConfig['items'] = $this->generateMenuItems();
 
-        $this->widget = \Yii::createObject(ArrayHelper::merge($config, $this->menuConfig));
+        $this->widget = \Yii::createObject(ArrayHelper::merge($defaultConfig, $this->menuConfig));
 
         parent::init();
     }
