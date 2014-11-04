@@ -24,7 +24,7 @@ class Event extends \yii\base\Event
     const WIZARD_EXPIRED = 'wizardExpired';
     const WIZARD_SAVE_DRAFT = 'wizardSaveDraft';
 
-    public $data = [];
+    public $wizardData = [];
     public $step;
 
     /**
@@ -32,15 +32,15 @@ class Event extends \yii\base\Event
      *
      * @param \yii\base\Object $sender
      * @param string|null $step
-     * @param array $data
+     * @param array $wizardData
      * @return Event
      */
-    public static function create($sender, $step = null, $data = null)
+    public static function create($sender, $step = null, $wizardData = null)
     {
         return new static([
             'sender' => $sender,
             'step' => $step,
-            'data' => $data
+            'wizardData' => $wizardData
         ]);
     }
 }

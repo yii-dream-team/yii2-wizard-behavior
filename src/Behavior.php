@@ -589,7 +589,7 @@ class Behavior extends \yii\base\Behavior
 
     /**
      * Raises the Event::WIZARD_PROCESS_STEP event.
-     * The $event->data property contains the current data for the step.
+     * The $event->wizardData property contains the current data for the step.
      * The event handler must set the $event->handled property to "true"
      * for the wizard to move to the next step.
      */
