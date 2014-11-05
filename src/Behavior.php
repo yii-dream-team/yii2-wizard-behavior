@@ -7,6 +7,7 @@
 namespace yiidreamteam\wizard;
 
 use yii\base\InvalidConfigException;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\Session;
 
@@ -253,9 +254,10 @@ class Behavior extends \yii\base\Behavior
      */
     public function read($step = null)
     {
+        $data = $this->_session->get($this->_stepsKey, []);
         return empty($step)
-            ? $this->_session[$this->_stepsKey]
-            : $this->_session[$this->_stepsKey][$step];
+            ? $data
+            : ArrayHelper::getValue($data, $step, []);
     }
 
     /**
