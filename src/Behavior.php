@@ -330,7 +330,7 @@ class Behavior extends \yii\base\Behavior
     protected function previousStep()
     {
         $index = $this->getStepIndex($this->_currentStep) - 1;
-        $this->redirect($this->_steps[$index > 0 ? $index : 0]);
+        $this->redirect(ArrayHelper::getValue(array_values($this->_steps), $index));
     }
 
     /**
@@ -640,7 +640,7 @@ class Behavior extends \yii\base\Behavior
      */
     protected function getStepIndex($stepName)
     {
-        return array_search($stepName, $this->_steps);
+        return array_search($stepName, array_values($this->_steps));
     }
 
 }
