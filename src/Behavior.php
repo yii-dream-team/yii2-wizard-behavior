@@ -513,7 +513,7 @@ class Behavior extends \yii\base\Behavior
      */
     private function branchDirective($branch)
     {
-        return isset($this->_session[$this->_branchKey])
+        return isset($this->_session[$this->_branchKey][$branch])
             ? $this->_session[$this->_branchKey][$branch]
             : null;
     }
