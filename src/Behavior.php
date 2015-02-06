@@ -145,6 +145,8 @@ class Behavior extends \yii\base\Behavior
     private $_timeoutKey;
     /** @var Session */
     private $_session;
+	
+	private $_iterator;
 
     /**
      * Attaches this behavior to the owner.
@@ -315,9 +317,15 @@ class Behavior extends \yii\base\Behavior
             $step = $this->getExpectedStep();
         else {
             $index = $this->getStepIndex($this->_currentStep) + 1;
-            $step = $index < count($this->_steps) ? $this->_steps[$index] : null;
-        }
 
+			if ($index >= count($this->_steps)) { 
+				$step = null;
+			} else {
+				$this->_iterator->seek($index);
+				$step = $this->_iterator->current();				
+			}
+        }
+		
         if ($this->timeout)
             $this->_session[$this->_timeoutKey] = time() + $this->timeout;
 
@@ -464,6 +472,7 @@ class Behavior extends \yii\base\Behavior
     protected function parseSteps()
     {
         $this->_steps = $this->_parseSteps($this->steps);
+		$this->_iterator = new \ArrayIterator($this->_steps);
     }
 
     public function getParsedSteps()
