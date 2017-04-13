@@ -67,7 +67,7 @@ class Menu extends Widget
 
     public function run()
     {
-        $this->widget->run();
+        return $this->widget->run();
     }
 
     private function generateMenuItems()
